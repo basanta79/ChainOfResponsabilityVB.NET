@@ -56,12 +56,14 @@ Public Class Director
     Inherits Approver
 
     Public Overrides Function ProcessRequest(purchase As Purchase) As String
+        Dim sResult = ""
         If (purchase.Amount < 1000) Then
             Console.WriteLine("{0} aproved request #{1}", Me.GetType.Name, purchase.Number)
-            Return String.Format("{0} aproved request #{1}", Me.GetType.Name, purchase.Number)
+            sResult = String.Format("{0} aproved request #{1}", Me.GetType.Name, purchase.Number)
         ElseIf successor IsNot Nothing Then
-            successor.ProcessRequest(purchase)
+            sResult = successor.ProcessRequest(purchase)
         End If
+        Return sResult
     End Function
 
 End Class
@@ -70,12 +72,14 @@ Public Class VicePresident
     Inherits Approver
 
     Public Overrides Function ProcessRequest(purchase As Purchase) As String
+        Dim sResult = ""
         If (purchase.Amount < 25000) Then
             Console.WriteLine("{0} aproved request #{1}", Me.GetType().Name, purchase.Number)
-            Return String.Format("{0} aproved request #{1}", Me.GetType().Name, purchase.Number)
+            sResult = String.Format("{0} aproved request #{1}", Me.GetType().Name, purchase.Number)
         ElseIf successor IsNot Nothing Then
-            successor.ProcessRequest(purchase)
+            sResult = successor.ProcessRequest(purchase)
         End If
+        Return sResult
     End Function
 End Class
 
@@ -83,13 +87,15 @@ Public Class President
     Inherits Approver
 
     Public Overrides Function ProcessRequest(purchase As Purchase) As String
+        Dim sResult = ""
         If (purchase.Amount < 100000) Then
             Console.WriteLine("{0} aproved request #{1}", Me.GetType().Name, purchase.Number)
-            Return String.Format("{0} aproved request #{1}", Me.GetType().Name, purchase.Number)
+            sResult = String.Format("{0} aproved request #{1}", Me.GetType().Name, purchase.Number)
         Else
             Console.WriteLine("Request #{0}, needs a executive meeting!!", purchase.Number)
-            Return String.Format("{0} aproved request #{1}", Me.GetType().Name, purchase.Number)
+            sResult = String.Format("{0} aproved request #{1}", Me.GetType().Name, purchase.Number)
         End If
+        Return sResult
     End Function
 End Class
 
